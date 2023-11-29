@@ -13,8 +13,17 @@ export default async function Home() {
   const shows = await getShows()
   const posts = await getPosts()
   const products = await getProducts()
-  const inventory = await getInventory()
-
+  // TODO: Map show structure such that the name of the show is the primary linkage between content and show products
+  const productItems = products.objects.reduce((acc, curr) => {
+    if (curr.itemData?.variations) {
+      acc.push(...curr.itemData?.variations.map(g => g.id))
+    }
+    return acc
+  }, [])
+  console.log('showCatalogIds', productItems)
+  const inventory = await getInventory(productItems)
+  const inventoryCounts = inventory.counts.map(f => { return { id: f.catalogObjectId, quantity: f.quantity } })
+  console.log('inventoryCounts', inventoryCounts)
   const options = {
     preserveWhitespace: true,
   };
@@ -22,9 +31,18 @@ export default async function Home() {
 
   const showsCombined = shows.map((show) => {
     const productData = products.objects.find(product => product.itemData?.name === show.fields.title)
+
     return {
       title: show.fields.title,
-      dates: productData?.itemData.variations.map(g => { return { name: g.itemVariationData.name, price: numberFormat.format(g.itemVariationData.priceMoney.amount / 100n), currency: g.itemVariationData.priceMoney.currency } })
+      dates: productData?.itemData.variations.map(g => {
+        const inventoryData = inventoryCounts.find(f => f.id === g.id)
+        return {
+          name: g.itemVariationData.name,
+          price: numberFormat.format(g.itemVariationData.priceMoney.amount / 100n),
+          currency: g.itemVariationData.priceMoney.currency,
+          remaining: inventoryData.quantity
+        }
+      })
     }
   })
 
@@ -43,7 +61,7 @@ export default async function Home() {
                 {show.dates?.map(showtime => {
                   // const date = parseISO(showtime.fields.showTime)
                   return (<li key={showtime.name}>
-                    {showtime.name}  {showtime.price} {showtime.currency}
+                    {showtime.name}  {showtime.price} {showtime.currency} Remaining:  {showtime.remaining}
                     {/* {format(date, 'LLLL d, yyyy')} */}
                   </li>)
                 })}

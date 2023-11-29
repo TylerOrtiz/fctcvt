@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { client } from '@/api/clients/contentful'
+import client from '@/api/clients/contentful'
 
 const getShows = async () => {
     const { items } = await client.getEntries({ content_type: 'show' })

@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { client } from '@/api/clients/square'
+import client from '@/api/clients/square'
 
 
 const getProducts = async () => {
@@ -7,8 +7,8 @@ const getProducts = async () => {
     return result
 }
 
-const getInventory = async () => {
-    const { result, ...httpResponse } = await client.inventoryApi.retrieveInventoryCount('Z4JU43G5AL4ZN56QWSLSPU6U')
+const getInventory = async (catalogIds) => {
+    const { result, ...httpResponse } = await client.inventoryApi.batchRetrieveInventoryCounts({catalogObjectIds: catalogIds})
     return result
 }
 
