@@ -1,42 +1,50 @@
-import Image from 'next/image'
 import styles from './page.module.css'
-import { client } from '@/api/contentful'
 import { parseISO, format } from 'date-fns';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { getShows, getPosts } from '@/api/content';
+import { getProducts, getInventory } from '@/api/catalog';
 
 
-async function getShows() {
-  const data = await client.getEntries({ content_type: 'show' })
-  return data.items
-}
 
-async function getPosts() {
-  const data = await client.getEntries({ content_type: 'blogPost' })
-  return data.items
-}
+
 
 
 export default async function Home() {
   const shows = await getShows()
   const posts = await getPosts()
+  const products = await getProducts()
+  const inventory = await getInventory()
+
   const options = {
     preserveWhitespace: true,
   };
+  const numberFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+
+  const showsCombined = shows.map((show) => {
+    const productData = products.objects.find(product => product.itemData?.name === show.fields.title)
+    return {
+      title: show.fields.title,
+      dates: productData?.itemData.variations.map(g => { return { name: g.itemVariationData.name, price: numberFormat.format(g.itemVariationData.priceMoney.amount / 100n), currency: g.itemVariationData.priceMoney.currency } })
+    }
+  })
+
   return (
     <main className={styles.main}>
 
 
       <div className={styles.grid}>
         <h1>Shows</h1>
-        {shows.map(show => {
+        {showsCombined.map(show => {
           return (
-            <div key={show.fields.title}>
-              {show.fields.title}
+            <div key={show.title}>
+              {show.title}
               <ul>
-                {show.fields.showDatesAndTimes.map(showtime => {
-                  const date = parseISO(showtime.fields.showTime)
-                  return (<li key={showtime.fields.showId}>
-                    {format(date, 'LLLL d, yyyy')}
+
+                {show.dates?.map(showtime => {
+                  // const date = parseISO(showtime.fields.showTime)
+                  return (<li key={showtime.name}>
+                    {showtime.name}  {showtime.price} {showtime.currency}
+                    {/* {format(date, 'LLLL d, yyyy')} */}
                   </li>)
                 })}
               </ul>
