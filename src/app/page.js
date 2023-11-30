@@ -3,11 +3,7 @@ import { parseISO, format } from 'date-fns';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { getShows, getPosts } from '@/api/content';
 import { getProducts, getInventory } from '@/api/catalog';
-
-
-
-
-
+import Image from 'next/image'
 
 export default async function Home() {
   const shows = await getShows()
@@ -48,7 +44,7 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
-
+      <Image src="/logo.webp" alt="fctc logo" width={302} height={302} />
 
       <div className={styles.grid}>
         <h1>Shows</h1>

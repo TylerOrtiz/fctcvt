@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Navigation({ shows }) {
     return (
         <ul>
-            <li>
+            <li key='home'>
                 <Link href="/">Home</Link>
             </li>
             {shows.map((show) => (
