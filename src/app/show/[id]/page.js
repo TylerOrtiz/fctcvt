@@ -3,7 +3,9 @@ import { getShows } from '@/api/content';
 import { getProducts, getInventory } from '@/api/catalog';
 import { kebabCase } from '@/utility/kebab';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-
+import Link from 'next/link'
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 export async function generateStaticParams() {
     const shows = await getShows()
 
@@ -55,6 +57,17 @@ export default async function Page({ params }) {
     const showViewModel = showCombined(show)
 
     return <>
+        <Breadcrumbs aria-label="breadcrumb">
+            <Link
+                underline="hover"
+                color="inherit"
+                href="/shows"
+            >
+                Shows
+            </Link>
+            <Typography>{show.fields.title}</Typography>
+        </Breadcrumbs>
+
         <h1>{show.fields.title}</h1>
 
         <h2>About the Show:</h2>
