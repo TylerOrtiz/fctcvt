@@ -13,7 +13,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Container } from '@mui/material';
+import Container from '@mui/material/Container';
 
 
 export default function Navigation({ window }) {
@@ -45,11 +45,12 @@ export default function Navigation({ window }) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Link href="/">
-                <Image src="/logo.webp" alt="fctc logo" width={100} height={100} />
-            </Link>
-            <Divider />
             <List>
+                <ListItem key="home" disablePadding>
+                    <ListItemButton sx={{ textAlign: 'center' }} href="/">
+                        <ListItemText primary="Home" />
+                    </ListItemButton>
+                </ListItem>
                 {navItems.map((item) => (
                     <ListItem key={item.location} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }} href={item.location}>
@@ -63,9 +64,9 @@ export default function Navigation({ window }) {
 
     return (
         <>
-            <AppBar component="nav" position="fixed" sx={{ zIndex: 2000 }} >
+            <AppBar component="nav" position="fixed" sx={{ zIndex: 2000}} >
                 <Container maxWidth="lg" disableGutters={true} >
-                    <Toolbar sx={{}}>
+                    <Toolbar disableGutters={true}>
                         <Button
                             color="inherit"
                             aria-label="open drawer"
@@ -73,7 +74,7 @@ export default function Navigation({ window }) {
                             onClick={handleDrawerToggle}
                             sx={{ mr: 2, display: { sm: 'none' } }}
                         >
-                            <Image src="/logo.webp" alt="fctc logo" width={100} height={100} />
+                            <Image src="/logo.webp" alt="fctc logo" width={75} height={75} />
                         </Button>
                         <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
                             <Box sx={{ display: 'inline-flex', marginRight: '1rem' }}>
@@ -100,7 +101,7 @@ export default function Navigation({ window }) {
                         }}
                         sx={{
                             display: { xs: 'block', sm: 'none' },
-                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, marginTop: '85px' },
                         }}
                     >
                         {drawer}

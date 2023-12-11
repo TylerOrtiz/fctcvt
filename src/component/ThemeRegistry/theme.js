@@ -12,10 +12,10 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-        main: grey[900]
+      main: grey[900]
     },
     secondary: {
-        main: '#F40909'
+      main: '#F40909'
     }
   },
   typography: {
@@ -23,25 +23,13 @@ const theme = createTheme({
   },
   components: {
     MuiAppBar: {
-        defaultProps: {
-        },
-        styleOverrides: {
-            root: {
-                colorDefault: '#fff',
-                backgroundColor: '#fff'
-            }
-         
+      styleOverrides: {
+        root: {
+          colorDefault: '#fff',
+          backgroundColor: '#fff',
         }
+      }
     },
-    MuiButton: {
-        styleOverrides: {
-          // Name of the slot
-          root: {
-            // Some CSS
-            fontSize: '1rem',
-          },
-        },
-      },
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
