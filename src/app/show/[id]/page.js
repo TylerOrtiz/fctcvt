@@ -10,13 +10,13 @@ export async function generateStaticParams() {
     const shows = await getShows()
 
     return shows.map((show) => ({
-        id: kebabCase(show.fields.title)
+        id: kebabCase(show.title)
     }))
 }
 
 export default async function Page({ params }) {
     const shows = await getShows()
-    const show = shows.find(f => f.fields?.title && (kebabCase(f.fields.title) === kebabCase(params?.id)))
+    const show = shows.find(f => f?.title && (kebabCase(f.title) === kebabCase(params?.id)))
 
     if (!show) {
         notFound()
@@ -38,10 +38,10 @@ export default async function Page({ params }) {
     const numberFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
 
     const showCombined = (show) => {
-        const productData = products.objects.find(product => product.itemData?.name === show.fields.title)
+        const productData = products.objects.find(product => product.itemData?.name === show.title)
 
         return {
-            title: show.fields.title,
+            title: show.title,
             dates: productData?.itemData.variations.map(g => {
                 const inventoryData = inventoryCounts.find(f => f.id === g.id)
                 return {
@@ -65,13 +65,13 @@ export default async function Page({ params }) {
             >
                 Shows
             </Link>
-            <Typography>{show.fields.title}</Typography>
+            <Typography>{show.title}</Typography>
         </Breadcrumbs>
 
-        <h1>{show.fields.title}</h1>
+        <h1>{show.title}</h1>
 
         <h2>About the Show:</h2>
-        <div>{documentToReactComponents(show.fields.showDetails, {
+        <div>{documentToReactComponents(show.showDetails, {
             preserveWhitespace: true,
         })}</div>
 
@@ -90,9 +90,9 @@ export default async function Page({ params }) {
 
         <h2>Location:</h2>
         <address>
-            {show.fields.location.fields.name} <br />
-            {show.fields.location.fields.streetAddress} <br />
-            {show.fields.location.fields.city}, {show.fields.location.fields.state} {show.fields.location.fields.zipCode}
+            {show.location.name} <br />
+            {show.location.streetAddress} <br />
+            {show.location.city}, {show.location.state} {show.location.zipCode}
         </address>
     </>
 }

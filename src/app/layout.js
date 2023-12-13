@@ -14,8 +14,8 @@ export default async function RootLayout({ children }) {
   const shows = await getShows()
 
   const showsList = shows.map((show) => ({
-    id: kebabCase(show.fields.title),
-    title: show.fields.title
+    id: kebabCase(show.title),
+    title: show.title
   }))
 
   return (
