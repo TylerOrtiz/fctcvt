@@ -6,6 +6,8 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Link from 'next/link'
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Image from 'next/image'
+
 export async function generateStaticParams() {
     const shows = await getShows()
 
@@ -30,10 +32,10 @@ export default async function Page({ params }) {
         }
         return acc
     }, [])
-    console.log('showCatalogIds', productItems)
+    // console.log('showCatalogIds', productItems)
     const inventory = await getInventory(productItems)
     const inventoryCounts = inventory.counts.map(f => { return { id: f.catalogObjectId, quantity: f.quantity } })
-    console.log('inventoryCounts', inventoryCounts)
+    // console.log('inventoryCounts', inventoryCounts)
 
     const numberFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
 
@@ -69,6 +71,8 @@ export default async function Page({ params }) {
         </Breadcrumbs>
 
         <h1>{show.title}</h1>
+        {show.featuredImage ? ( <Image src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />) : null}
+       
 
         <h2>About the Show:</h2>
         <div>{documentToReactComponents(show.showDetails, {
