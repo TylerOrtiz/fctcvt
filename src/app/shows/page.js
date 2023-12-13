@@ -48,7 +48,7 @@ export default async function Shows() {
 
         {pastShows.map((show) => {
             return (
-                <Card sx={{ mt: 3, mb: 3 }}>
+                <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
                     <CardHeader title={<>
                         <Link href={`/show/${kebabCase(show.title)}`}><b>{show.title} - {format(show.startDate, 'yyyy')}</b></Link>
                     </>} />
