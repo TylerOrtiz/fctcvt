@@ -1,16 +1,13 @@
 import { getShows } from '@/api/content';
 import { kebabCase } from '@/utility/kebab';
-import { Box } from '@mui/material';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import Link from 'next/link'
 import { format } from 'date-fns';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import ShareIcon from '@mui/icons-material/Share';
+import ShareCardActions from '@/component/Shows/ShareCardActions'
+import CardActionArea from '@mui/material/CardActionArea';
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -20,7 +17,7 @@ const isCurrent = (show) => {
 
 export default async function Shows() {
     const shows = await getShows()
-    const showsSorted = shows.sort((left, right) =>  {
+    const showsSorted = shows.sort((left, right) => {
         return left?.startDate.getTime() > right?.startDate.getTime() ? -1 : 1
     })
     const currentShows = showsSorted.filter((show) => isCurrent(show))
@@ -34,27 +31,22 @@ export default async function Shows() {
     }, {})
 
     return <>
-        <h1>Current Shows!</h1>
+        <h1>FCTC Presents: Our shows!</h1>
+
+        <h2>Upcoming Shows</h2>
         {currentShows.map((show) => {
             return (
-                <Box key={show.title}>
-                    <Link href={`/show/${kebabCase(show.title)}`}><h2>{show.title}</h2></Link>
-                    <p>From  {format(show.startDate, 'LLLL d, yyyy')} to    {format(show.endDate, 'LLLL d, yyyy')}</p>
-                </Box>
-            )
-        })}
-
-        <h2>Past Shows!</h2>
-
-        {pastShows.map((show) => {
-            return (
                 <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
-                    <CardHeader title={<>
-                        <Link href={`/show/${kebabCase(show.title)}`}><b>{show.title} - {format(show.startDate, 'yyyy')}</b></Link>
-                    </>} />
+                    <CardActionArea href={`/show/${kebabCase(show.title)}`}>
+                        <CardHeader 
+                            sx={{ color: 'secondary.main' }} 
+                            title={<h3 style={{ margin: 0 }}>{show.title} - {format(show.startDate, 'yyyy')}</h3>}
+                        >
+                        </CardHeader>
+                    </CardActionArea>
                     <CardMedia
                         component="img"
-                        height="250"
+                        height="350"
                         image={show.featuredImage?.[0]?.url}
                     />
                     <CardContent>
@@ -65,11 +57,37 @@ export default async function Shows() {
                             })}
                         </div>
                     </CardContent>
-                    <CardActions disableSpacing>
-                        <IconButton aria-label="Share">
-                            <ShareIcon />
-                        </IconButton>
-                    </CardActions>
+                    <ShareCardActions url={`/show/${kebabCase(show.title)}`} />
+                </Card>
+            )
+        })}
+
+        <h2>Past Shows</h2>
+
+        {pastShows.map((show) => {
+            return (
+                <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
+                    <CardActionArea href={`/show/${kebabCase(show.title)}`}>
+                        <CardHeader 
+                            sx={{ color: 'secondary.main' }} 
+                            title={<><h3 style={{ margin: 0 }}>{show.title} - {format(show.startDate, 'yyyy')}</h3></>}
+                            >
+                        </CardHeader>
+                    </CardActionArea>
+                    <CardMedia
+                        component="img"
+                        height="175"
+                        image={show.featuredImage?.[0]?.url}
+                    />
+                    <CardContent>
+                        <div>
+                            {documentToReactComponents(show.showDetails, {
+                                preserveWhitespace: true,
+                                renderText: (text) => text
+                            })}
+                        </div>
+                    </CardContent>
+                    <ShareCardActions url={`/show/${kebabCase(show.title)}`} />
                 </Card>
             )
         })}

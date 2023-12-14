@@ -71,7 +71,7 @@ export default async function Page({ params }) {
         </Breadcrumbs>
 
         <h1>{show.title}</h1>
-        {show.featuredImage ? ( <Image src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />) : null}
+        {show.featuredImage ? ( <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />) : null}
        
 
         <h2>About the Show:</h2>
