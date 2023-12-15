@@ -8,7 +8,8 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-const theme = createTheme({
+
+const baseTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
@@ -29,6 +30,55 @@ const theme = createTheme({
           backgroundColor: '#fff',
         }
       }
+    },
+    MuiCardActions: {
+      variants: [
+        {
+          props: { variant: 'right'},
+          style: {
+            justifyContent: 'flex-end',
+          }
+        },
+        {
+          props: { variant: 'center'},
+          style: {
+            justifyContent: 'center',
+          }
+        },
+        {
+          props: { variant: 'left'},
+          style: { 
+            justifyContent: 'flex-start',
+          }
+        }
+      ]
+    }
+  }
+});
+
+const theme = createTheme(baseTheme, {
+  components: {
+    MuiCardHeader: {
+      variants: [
+        {
+          props: { variant: 'currentShow' },
+          style: {
+            '& .MuiCardHeader-title': {
+              fontWeight: 'bold',
+              color: baseTheme.palette.secondary.main,
+            }
+          },
+        },
+        {
+          props: { variant: 'pastShow' },
+          style: {
+            '& .MuiCardHeader-title': {
+              fontWeight: 'bold',
+              color: baseTheme.palette.secondary.main,
+            }
+          },
+        }
+      ]
     }
   },
 });
