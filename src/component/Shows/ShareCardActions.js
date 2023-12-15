@@ -14,11 +14,11 @@ export default function ShowCardActions({ url }) {
     const twitterUrl = `https://twitter.com/intent/tweet?url=${shareUrl}`
 
     return (
-        <CardActions disableSpacing variant="right">
-            <IconButton href={twitterUrl} aria-label="Share on Twitter" color="info">
+        <CardActions variant="right">
+            <IconButton href={twitterUrl} aria-label="Share on Twitter" color="info" size="large">
                 <Twitter />
             </IconButton>
-            <IconButton href={facebookUrl} aria-label="Share on Facebook" color="info">
+            <IconButton href={facebookUrl} aria-label="Share on Facebook" color="info" size="large">
                 <Facebook />
             </IconButton>
         </CardActions>

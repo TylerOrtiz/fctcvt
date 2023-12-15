@@ -7,6 +7,9 @@ import Link from 'next/link'
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Image from 'next/image'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Unstable_Grid2'
+import Button from '@mui/material/Button'
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -57,46 +60,83 @@ export default async function Page({ params }) {
     }
 
     const showViewModel = showCombined(show)
+    const getTicketsUrl = `https://${process.env.NEXT_PUBLIC_SQUARESPACE_HOST}/${kebabCase(show.title)}`
+    const showTicketUrl = true // TODO: Consolidate current show logic
+
+    const ShowTimes = () => (
+        <>
+            <h2>Show Times:</h2>
+            <ul>
+                {showViewModel.dates?.map(showtime => {
+                    return (
+                        <li key={showtime.name}>
+                            <p>{showtime.name}</p>
+                            <p>Ticket Price: {showtime.price} {showtime.currency}</p>
+                            <p>Tickets Remaining: {showtime.remaining}</p>
+                        </li>
+                    )
+                })}
+            </ul>
+        </>
+    )
+
+    const Location = () => (
+        <>
+            <h2>Location:</h2>
+            <address>
+                {show.location.name} <br />
+                {show.location.streetAddress} <br />
+                {show.location.city}, {show.location.state} {show.location.zipCode}
+            </address>
+        </>
+    )
+
+    const ShowDetails = () => (
+        <>
+            <h2>About the Show:</h2>
+            <div>{documentToReactComponents(show.showDetails, {
+                preserveWhitespace: true,
+            })}</div>
+        </>
+    )
 
     return <>
-        <Breadcrumbs aria-label="breadcrumb">
-            <Link
-                underline="hover"
-                color="inherit"
-                href="/shows"
-            >
-                Shows
-            </Link>
-            <Typography>{show.title}</Typography>
-        </Breadcrumbs>
+        <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link
+                    underline="hover"
+                    color="inherit"
+                    href="/shows"
+                >
+                    Shows
+                </Link>
+                <Typography>{show.title}</Typography>
+            </Breadcrumbs>
 
-        <h1>{show.title}</h1>
-        {show.featuredImage ? ( <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />) : null}
-       
+            <h1>{show.title}</h1>
 
-        <h2>About the Show:</h2>
-        <div>{documentToReactComponents(show.showDetails, {
-            preserveWhitespace: true,
-        })}</div>
+            <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+                {show.featuredImage ? (
+                    <Grid xs={4} sm={8} md={12}>
+                        <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />
+                    </Grid>
+                ) : null}
 
-        <h2>Show Times:</h2>
-        <ul>
-            {showViewModel.dates?.map(showtime => {
-                return (
-                    <li key={showtime.name}>
-                        <p>{showtime.name}</p>
-                        <p>Ticket Price: {showtime.price} {showtime.currency}</p>
-                        <p>Tickets Remaining: {showtime.remaining}</p>
-                    </li>
-                )
-            })}
-        </ul>
+                {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <Button href={getTicketsUrl} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
+                        Get Tickets
+                    </Button></Box>}
+                <Grid xs={4} sm={8} md={12}>
+                    <ShowDetails />
+                </Grid>
+                <Grid xs={4} sm={4} md={6}>
+                    <ShowTimes />
+                </Grid>
+                <Grid xs={4} sm={4} md={6}>
+                    <Location />
+                </Grid>
+            </Grid>
+        </Box>
 
-        <h2>Location:</h2>
-        <address>
-            {show.location.name} <br />
-            {show.location.streetAddress} <br />
-            {show.location.city}, {show.location.state} {show.location.zipCode}
-        </address>
     </>
 }
