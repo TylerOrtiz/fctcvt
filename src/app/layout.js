@@ -1,5 +1,5 @@
 import './globals.css'
-import Navigation from '@/component/navigation'
+import Navigation from '@/component/Navigation'
 import { getShows } from '@/api/content';
 import { kebabCase } from '@/utility/kebab';
 import ThemeRegistry from '@/component/ThemeRegistry/ThemeRegistry';

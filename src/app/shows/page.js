@@ -1,6 +1,5 @@
 import { getShows } from '@/api/content';
 import { kebabCase } from '@/utility/kebab';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,6 +9,7 @@ import ShareCardActions from '@/component/Shows/ShareCardActions'
 import CardActionArea from '@mui/material/CardActionArea';
 import ShowDetailCardActions from '@/component/Shows/ShowDetailCardActions';
 import { shortDate, yearOnly } from '@/utility/date';
+import Content from '@/component/ContentBlock/Content'
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -50,12 +50,7 @@ export default async function Shows() {
                     /> : null}
 
                     <CardContent>
-                        <div>
-                            {documentToReactComponents(show.showDetails, {
-                                preserveWhitespace: true,
-                                renderText: (text) => text
-                            })}
-                        </div>
+                        <Content content={show.showDetails} />
                     </CardContent>
                     <ShowDetailCardActions detailUrl={`/show/${kebabCase(show.title)}`} ticketPath={`${kebabCase(show.title)}`} />
                     <ShareCardActions url={`/show/${kebabCase(show.title)}`} />
@@ -84,12 +79,7 @@ export default async function Shows() {
                         image={show.featuredImage?.[0]?.url}
                     /> : null}
                     <CardContent>
-                        <div>
-                            {documentToReactComponents(show.showDetails, {
-                                preserveWhitespace: true,
-                                renderText: (text) => text
-                            })}
-                        </div>
+                        <Content content={show.showDetails} />
                     </CardContent>
                     <ShowDetailCardActions detailUrl={`/show/${kebabCase(show.title)}`} />
                     <ShareCardActions url={`/show/${kebabCase(show.title)}`} />

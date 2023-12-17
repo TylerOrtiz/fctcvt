@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import { getShows } from '@/api/content';
 import { getProducts, getInventory } from '@/api/catalog';
 import { kebabCase } from '@/utility/kebab';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Link from 'next/link'
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -10,6 +9,7 @@ import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
+import Content from '@/component/ContentBlock/Content'
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -94,9 +94,7 @@ export default async function Page({ params }) {
     const ShowDetails = () => (
         <>
             <h2>About the Show:</h2>
-            <div>{documentToReactComponents(show.showDetails, {
-                preserveWhitespace: true,
-            })}</div>
+            <Content content={show.showDetails} />
         </>
     )
 

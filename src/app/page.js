@@ -1,7 +1,7 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { getPosts } from '@/api/content';
 import Image from 'next/image'
 import { longDate } from '@/utility/date';
+import Content from '@/component/ContentBlock/Content'
 
 export default async function Home() {
   const posts = await getPosts()
@@ -18,9 +18,7 @@ export default async function Home() {
                 <h2>{post.title}</h2>
                 <h3>{longDate(post.date)}</h3>
               </div>
-              <div>{documentToReactComponents(post.content, {
-                preserveWhitespace: true,
-              })}</div>
+              <Content content={post.content} />
             </div>
           )
         })}

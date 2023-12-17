@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import Content from '@/component/ContentBlock/Content'
 import { getPosts } from '@/api/content';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -40,9 +40,7 @@ export default async function Post({ params }) {
         <h2>{post.title}</h2>
         <h3>{longDate(post.date)}</h3>
       </div>
-      <div>{documentToReactComponents(post.content, {
-        preserveWhitespace: true,
-      })}</div>
+      <Content content={post.content} />
     </Box>
   </>
 }

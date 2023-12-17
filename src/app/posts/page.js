@@ -1,4 +1,4 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import Content from '@/component/ContentBlock/Content'
 import { getPosts } from '@/api/content';
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,9 +24,7 @@ export default async function Posts() {
                     <span>{longDate(post.date)}</span>
                 </Grid>
                 <Grid xs={8}>
-                    <div>{documentToReactComponents(post.content, {
-                        preserveWhitespace: true,
-                    })}</div>
+                    <Content content={post.content} />
                 </Grid>
             </Grid>
         </>
