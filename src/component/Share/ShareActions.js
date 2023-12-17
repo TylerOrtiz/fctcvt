@@ -9,7 +9,7 @@ const alignmentKeys = {
 }
 
 const getAlign = (alignment) => {
-    if ( !alignment ) {
+    if (!alignment) {
         return 'flex-end'
     }
     return alignmentKeys[alignment] ?? 'flex-end'
@@ -27,10 +27,10 @@ export default function ShareActions({ url, align }) {
 
     return (
         <div style={{ display: 'flex', justifyContent: alignment, width: '100%' }}>
-            <IconButton href={twitterUrl} aria-label="Share on Twitter" color="info" size="large">
+            <IconButton href={twitterUrl} aria-label="Share on Twitter" color="info" size="large" style={{ marginLeft: '0.25rem', marginRight: '0.25rem' }}>
                 <Twitter />
             </IconButton>
-            <IconButton href={facebookUrl} aria-label="Share on Facebook" color="info" size="large">
+            <IconButton href={facebookUrl} aria-label="Share on Facebook" color="info" size="large" style={{ marginLeft: '0.25rem', marginRight: '0.25rem' }}>
                 <Facebook />
             </IconButton>
         </div>

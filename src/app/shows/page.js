@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import ShareActions from '@/component/Share/ShareActions'
 import CardActionArea from '@mui/material/CardActionArea';
-import ShowDetailCardActions from '@/component/Shows/ShowDetailCardActions';
+import ShowPrimaryActions from '@/component/Shows/ShowPrimaryActions';
 import { shortDate, yearOnly } from '@/utility/date';
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
@@ -53,7 +53,9 @@ export default async function Shows() {
                     <CardContent>
                         <Content content={show.showDetails} />
                     </CardContent>
-                    <ShowDetailCardActions show={show} showTickets={true} />
+                    <CardActions>
+                        <ShowPrimaryActions show={show} showTickets={true} />
+                    </CardActions>
                     <CardActions>
                         <ShareActions url={LinkGenerator.showLink(show)} />
                     </CardActions>
@@ -84,7 +86,9 @@ export default async function Shows() {
                     <CardContent>
                         <Content content={show.showDetails} />
                     </CardContent>
-                    <ShowDetailCardActions show={show} />
+                    <CardActions>
+                        <ShowPrimaryActions show={show} />
+                    </CardActions>
                     <CardActions>
                         <ShareActions url={LinkGenerator.showLink(show)} />
                     </CardActions>
