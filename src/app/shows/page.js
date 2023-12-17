@@ -4,12 +4,13 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import ShareCardActions from '@/component/Shows/ShareCardActions'
+import ShareActions from '@/component/Share/ShareActions'
 import CardActionArea from '@mui/material/CardActionArea';
 import ShowDetailCardActions from '@/component/Shows/ShowDetailCardActions';
 import { shortDate, yearOnly } from '@/utility/date';
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
+import CardActions from '@mui/material/CardActions'
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -53,7 +54,9 @@ export default async function Shows() {
                         <Content content={show.showDetails} />
                     </CardContent>
                     <ShowDetailCardActions show={show} showTickets={true} />
-                    <ShareCardActions url={LinkGenerator.showLink(show)} />
+                    <CardActions>
+                        <ShareActions url={LinkGenerator.showLink(show)} />
+                    </CardActions>
                 </Card>
             )
         })}
@@ -82,7 +85,9 @@ export default async function Shows() {
                         <Content content={show.showDetails} />
                     </CardContent>
                     <ShowDetailCardActions show={show} />
-                    <ShareCardActions url={LinkGenerator.showLink(show)} />
+                    <CardActions>
+                        <ShareActions url={LinkGenerator.showLink(show)} />
+                    </CardActions>
                 </Card>
             )
         })}

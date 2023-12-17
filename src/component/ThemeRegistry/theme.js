@@ -31,28 +31,6 @@ const baseTheme = createTheme({
         }
       }
     },
-    MuiCardActions: {
-      variants: [
-        {
-          props: { variant: 'right'},
-          style: {
-            justifyContent: 'flex-end',
-          }
-        },
-        {
-          props: { variant: 'center'},
-          style: {
-            justifyContent: 'center',
-          }
-        },
-        {
-          props: { variant: 'left'},
-          style: { 
-            justifyContent: 'flex-start',
-          }
-        }
-      ]
-    }
   }
 });
 
