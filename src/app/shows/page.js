@@ -1,5 +1,4 @@
 import { getShows } from '@/api/content';
-import { kebabCase } from '@/utility/kebab';
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,6 +9,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import ShowDetailCardActions from '@/component/Shows/ShowDetailCardActions';
 import { shortDate, yearOnly } from '@/utility/date';
 import Content from '@/component/ContentBlock/Content'
+import LinkGenerator from '@/utility/links'
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -35,7 +35,7 @@ export default async function Shows() {
         {currentShows.map((show) => {
             return (
                 <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
-                    <CardActionArea href={`/show/${kebabCase(show.title)}`}>
+                    <CardActionArea href={LinkGenerator.showLink(show)}>
                         <CardHeader variant="currentShow"
                             title={show.title}
                             subheader={`${shortDate(show.startDate)} - ${shortDate(show.endDate)}`}
@@ -52,8 +52,8 @@ export default async function Shows() {
                     <CardContent>
                         <Content content={show.showDetails} />
                     </CardContent>
-                    <ShowDetailCardActions detailUrl={`/show/${kebabCase(show.title)}`} ticketPath={`${kebabCase(show.title)}`} />
-                    <ShareCardActions url={`/show/${kebabCase(show.title)}`} />
+                    <ShowDetailCardActions show={show} showTickets={true} />
+                    <ShareCardActions url={LinkGenerator.showLink(show)} />
                 </Card>
             )
         })}
@@ -66,7 +66,7 @@ export default async function Shows() {
         {pastShows.map((show) => {
             return (
                 <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
-                    <CardActionArea href={`/show/${kebabCase(show.title)}`}>
+                    <CardActionArea href={LinkGenerator.showLink(show)}>
                         <CardHeader variant="pastShow"
                             title={`${show.title} - ${yearOnly(show.startDate)}`}
                             titleTypographyProps={{ component: 'h3' }}
@@ -81,8 +81,8 @@ export default async function Shows() {
                     <CardContent>
                         <Content content={show.showDetails} />
                     </CardContent>
-                    <ShowDetailCardActions detailUrl={`/show/${kebabCase(show.title)}`} />
-                    <ShareCardActions url={`/show/${kebabCase(show.title)}`} />
+                    <ShowDetailCardActions show={show} />
+                    <ShareCardActions url={LinkGenerator.showLink(show)} />
                 </Card>
             )
         })}

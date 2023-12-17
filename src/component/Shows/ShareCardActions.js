@@ -1,11 +1,9 @@
-'use client'
-
 import IconButton from '@mui/material/IconButton';
 import Facebook from '@mui/icons-material/Facebook';
 import Twitter from '@mui/icons-material/Twitter'
 import CardActions from '@mui/material/CardActions';
 
-export default function ShowCardActions({ url }) {
+export default function ShareCardActions({ url }) {
     const shareUrl = url?.startsWith('/') ?
         encodeURIComponent(`https://${process.env.NEXT_PUBLIC_HOST_NAME}${url}`) :
         url

@@ -14,18 +14,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Container from '@mui/material/Container';
-
+import LinkGenerator from '@/utility/links'
 
 export default function Navigation({ window }) {
     const drawerWidth = 240;
     const navItems = [
         {
             label: 'Shows',
-            location: '/shows'
+            location: LinkGenerator.showsLink()
         },
         {
             label: 'Posts',
-            location: '/posts',
+            location: LinkGenerator.postsLink(),
         },
         {
             label: 'About', location: '/about',

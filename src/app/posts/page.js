@@ -2,10 +2,10 @@ import Content from '@/component/ContentBlock/Content'
 import { getPosts } from '@/api/content';
 import Image from 'next/image'
 import Link from 'next/link'
-import { kebabCase } from '@/utility/kebab';
 import { Grid } from '@mui/material';
 import { longDate } from '@/utility/date';
 import Box from '@mui/material/Box'
+import LinkGenerator from '@/utility/links'
 
 export default async function Posts() {
     const posts = await getPosts()
@@ -20,7 +20,7 @@ export default async function Posts() {
                     </Grid>
                 ) : null}
                 <Grid xs={4}>
-                    <h2><Link href={`/post/${kebabCase(post.title)}`} >{post.title}</Link></h2>
+                    <h2><Link href={LinkGenerator.postLink(post)} >{post.title}</Link></h2>
                     <span>{longDate(post.date)}</span>
                 </Grid>
                 <Grid xs={8}>

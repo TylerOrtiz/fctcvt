@@ -1,7 +1,5 @@
 import './globals.css'
 import Navigation from '@/component/Navigation'
-import { getShows } from '@/api/content';
-import { kebabCase } from '@/utility/kebab';
 import ThemeRegistry from '@/component/ThemeRegistry/ThemeRegistry';
 import {Container} from '@mui/material';
 
@@ -11,18 +9,11 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
-  const shows = await getShows()
-
-  const showsList = shows.map((show) => ({
-    id: kebabCase(show.title),
-    title: show.title
-  }))
-
   return (
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <Navigation shows={showsList}></Navigation>
+          <Navigation></Navigation>
           <Container component="main" maxWidth="lg" sx={{
             mt: ['87px', '107px']
           }} disableGutters={true}>

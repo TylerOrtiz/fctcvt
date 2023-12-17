@@ -6,6 +6,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from 'next/link';
 import Box from '@mui/material/Box'
 import { longDate } from '@/utility/date';
+import LinkGenerator from '@/utility/links'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -29,7 +30,7 @@ export default async function Post({ params }) {
         <Link
           underline="hover"
           color="inherit"
-          href="/posts"
+          href={LinkGenerator.postsLink()}
         >
           Posts
         </Link>

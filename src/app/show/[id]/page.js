@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getShows } from '@/api/content';
 import { getProducts, getInventory } from '@/api/catalog';
-import { kebabCase } from '@/utility/kebab';
 import Link from 'next/link'
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -10,6 +9,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
+import LinkGenerator from '@/utility/links'
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -60,7 +60,6 @@ export default async function Page({ params }) {
     }
 
     const showViewModel = showCombined(show)
-    const getTicketsUrl = `https://${process.env.NEXT_PUBLIC_SQUARESPACE_HOST}/${kebabCase(show.title)}`
     const showTicketUrl = true // TODO: Consolidate current show logic
 
     const ShowTimes = () => (
@@ -104,7 +103,7 @@ export default async function Page({ params }) {
                 <Link
                     underline="hover"
                     color="inherit"
-                    href="/shows"
+                    href={LinkGenerator.showsLink()}
                 >
                     Shows
                 </Link>
@@ -121,7 +120,7 @@ export default async function Page({ params }) {
                 ) : null}
 
                 {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button href={getTicketsUrl} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
+                    <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
                         Get Tickets
                     </Button></Box>}
                 <Grid xs={4} sm={8} md={12}>
