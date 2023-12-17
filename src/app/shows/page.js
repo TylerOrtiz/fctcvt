@@ -1,7 +1,6 @@
 import { getShows } from '@/api/content';
 import { kebabCase } from '@/utility/kebab';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { format } from 'date-fns';
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import ShareCardActions from '@/component/Shows/ShareCardActions'
 import CardActionArea from '@mui/material/CardActionArea';
 import ShowDetailCardActions from '@/component/Shows/ShowDetailCardActions';
+import { shortDate, yearOnly } from '@/utility/date';
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -38,7 +38,7 @@ export default async function Shows() {
                     <CardActionArea href={`/show/${kebabCase(show.title)}`}>
                         <CardHeader variant="currentShow"
                             title={show.title}
-                            subheader={`${format(show.startDate, 'LLLL d')} - ${format(show.endDate, 'LLLL d')}`}
+                            subheader={`${shortDate(show.startDate)} - ${shortDate(show.endDate)}`}
                             titleTypographyProps={{ component: 'h3' }}
                         >
                         </CardHeader>
@@ -73,7 +73,7 @@ export default async function Shows() {
                 <Card sx={{ mt: 3, mb: 3 }} key={show.title}>
                     <CardActionArea href={`/show/${kebabCase(show.title)}`}>
                         <CardHeader variant="pastShow"
-                            title={`${show.title} - ${format(show.startDate, 'yyyy')}`}
+                            title={`${show.title} - ${yearOnly(show.startDate)}`}
                             titleTypographyProps={{ component: 'h3' }}
                         >
                         </CardHeader>

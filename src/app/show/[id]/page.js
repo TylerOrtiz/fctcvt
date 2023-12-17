@@ -15,13 +15,13 @@ export async function generateStaticParams() {
     const shows = await getShows()
 
     return shows.map((show) => ({
-        id: kebabCase(show.title)
+        id: show.id,
     }))
 }
 
 export default async function Page({ params }) {
     const shows = await getShows()
-    const show = shows.find(f => f?.title && (kebabCase(f.title) === kebabCase(params?.id)))
+    const show = shows.find(f => f.id === params.id)
 
     if (!show) {
         notFound()

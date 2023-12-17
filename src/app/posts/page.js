@@ -1,34 +1,45 @@
-import { parseISO, format } from 'date-fns';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { getPosts } from '@/api/content';
 import Image from 'next/image'
 import Link from 'next/link'
 import { kebabCase } from '@/utility/kebab';
+import { Grid } from '@mui/material';
+import { longDate } from '@/utility/date';
+import Box from '@mui/material/Box'
 
 export default async function Posts() {
     const posts = await getPosts()
-    const temp = posts.concat(posts).concat(posts).concat(posts)
+
+    const postComponent = (post) => {
+        const hasImage = false
+        return <>
+            <Grid container columns={{ xs: 12 }} key={post.title}>
+                {hasImage ? (
+                    <Grid xs={12}>
+                        {/* <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} /> */}
+                    </Grid>
+                ) : null}
+                <Grid xs={4}>
+                    <h2><Link href={`/post/${kebabCase(post.title)}`} >{post.title}</Link></h2>
+                    <span>{longDate(post.date)}</span>
+                </Grid>
+                <Grid xs={8}>
+                    <div>{documentToReactComponents(post.content, {
+                        preserveWhitespace: true,
+                    })}</div>
+                </Grid>
+            </Grid>
+        </>
+    }
 
     return (
         <>
-            <div>
-                <h1>Blog Posts</h1>
-                {temp.map((post, idx) => {
-                    const postDate = parseISO(post.fields.postDate)
-                    return (
-                        <div key={idx}>
-                            <div>
-                                <h2><Link href={`/post/${kebabCase(post.fields.postTitle)}`} >{post.fields.postTitle}</Link></h2>
-                                <h3>{format(postDate, 'LLLL d, yyyy')}</h3>
-                            </div>
-                            <div>{documentToReactComponents(post.fields.postContent, {
-                                preserveWhitespace: true,
-                            })}</div>
-                        </div>
-                    )
+            <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
+                <h1>Posts</h1>
+                {posts.map((post) => {
+                    return postComponent(post)
                 })}
-            </div>
+            </Box>
         </>
-
     )
 }
