@@ -12,19 +12,17 @@ export default async function Posts() {
     const posts = await getPosts()
 
     const postComponent = (post) => {
-        const hasImage = false
+        const hasImage = post.featuredImage?.[0]?.url
         return <>
             <Grid container columns={12} key={post.title}>
-                {hasImage ? (
-                    <Grid item xs={12}>
-                        {/* <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} /> */}
-                    </Grid>
-                ) : null}
                 <Grid item xs={12} sm={4}>
                     <h2><Link href={LinkGenerator.postLink(post)} >{post.title}</Link></h2>
                     <span>{longDate(post.date)}</span>
                 </Grid>
                 <Grid item xs={12} sm={8}>
+                    {hasImage ? (
+                        <Image alt={post.title} src={post.featuredImage[0].url} width={post.featuredImage[0].width} height={post.featuredImage[0].height} />
+                    ) : null}
                     <Content content={post.content} />
                 </Grid>
                 <Grid item xs={12}>
