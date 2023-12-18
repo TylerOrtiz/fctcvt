@@ -1,5 +1,4 @@
 import { getPosts } from '@/api/content';
-import Image from 'next/image'
 import { longDate } from '@/utility/date';
 import Content from '@/component/ContentBlock/Content'
 

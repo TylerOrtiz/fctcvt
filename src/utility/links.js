@@ -15,7 +15,7 @@ const showLink = (show) => {
 }
 
 const showTicketLink = (show) => {
-    const baseUrl = `https://${process.env.NEXT_PUBLIC_SQUARESPACE_HOST}`
+    const baseUrl = `https://${process.env.SQUARESPACE_HOST_NAME}`
     const pathUrl = `${show.id}`
     return `${baseUrl}/${pathUrl}`
 }

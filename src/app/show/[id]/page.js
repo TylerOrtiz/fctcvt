@@ -10,6 +10,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
+import Media from '@/utility/media'
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -115,7 +116,7 @@ export default async function Page({ params }) {
             <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
                 {show.featuredImage ? (
                     <Grid xs={4} sm={8} md={12}>
-                        <Image alt={show.title} src={show.featuredImage[0].url} width={show.featuredImage[0].width} height={show.featuredImage[0].height} />
+                        <Image alt={show.title} src={Media.featureImage(show.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350} />
                     </Grid>
                 ) : null}
 

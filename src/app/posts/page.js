@@ -7,6 +7,7 @@ import { longDate } from '@/utility/date';
 import Box from '@mui/material/Box'
 import LinkGenerator from '@/utility/links'
 import ShareActions from '@/component/Share/ShareActions';
+import Media from '@/utility/media'
 
 export default async function Posts() {
     const posts = await getPosts()
@@ -21,7 +22,7 @@ export default async function Posts() {
                 </Grid>
                 <Grid item xs={12} sm={8}>
                     {hasImage ? (
-                        <Image alt={post.title} src={post.featuredImage[0].url} width={post.featuredImage[0].width} height={post.featuredImage[0].height} />
+                        <Image alt={post.title} src={Media.bannerImage(post.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350} />
                     ) : null}
                     <Content content={post.content} />
                 </Grid>

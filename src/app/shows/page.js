@@ -11,6 +11,7 @@ import { shortDate, yearOnly } from '@/utility/date';
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import CardActions from '@mui/material/CardActions'
+import Media from '@/utility/media'
 
 const isCurrent = (show) => {
     const today = new Date()
@@ -46,8 +47,9 @@ export default async function Shows() {
                     </CardActionArea>
                     {show.featuredImage?.[0]?.url ? <CardMedia
                         component="img"
-                        height="350"
-                        image={show.featuredImage?.[0]?.url}
+                        width={800}
+                        height={350}
+                        image={Media.bannerImage(show.featuredImage?.[0]?.public_id, 800, 350)}
                     /> : null}
 
                     <CardContent>
@@ -80,8 +82,9 @@ export default async function Shows() {
                     </CardActionArea>
                     {show.featuredImage?.[0]?.url ? <CardMedia
                         component="img"
-                        height="175"
-                        image={show.featuredImage?.[0]?.url}
+                        width={800}
+                        height={200}               
+                        image={Media.bannerImage(show.featuredImage?.[0]?.public_id, 800, 200)}
                     /> : null}
                     <CardContent>
                         <Content content={show.showDetails} />

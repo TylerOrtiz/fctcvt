@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import { longDate } from '@/utility/date';
 import LinkGenerator from '@/utility/links'
 import Image from 'next/image'
+import Media from '@/utility/media'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -42,7 +43,7 @@ export default async function Post({ params }) {
         <h2>{post.title}</h2>
         <h3>{longDate(post.date)}</h3>
       </div>
-      <Image alt={post.title} src={post.featuredImage[0].url} width={post.featuredImage[0].width} height={post.featuredImage[0].height} />
+      <Image alt={post.title} src={Media.featureImage(post.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350} />
       <Content content={post.content} />
     </Box>
   </>
