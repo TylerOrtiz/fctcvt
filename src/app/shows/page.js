@@ -13,19 +13,10 @@ import LinkGenerator from '@/utility/links'
 import CardActions from '@mui/material/CardActions'
 import Media from '@/utility/media'
 
-const isCurrent = (show) => {
-    const today = new Date()
-
-    return new Date(show.endDate) >= today
-}
-
 export default async function Shows() {
     const shows = await getShows()
-    const showsSorted = shows.sort((left, right) => {
-        return left?.startDate.getTime() > right?.startDate.getTime() ? -1 : 1
-    })
-    const currentShows = showsSorted.filter((show) => isCurrent(show))
-    const pastShows = showsSorted.filter((show) => !isCurrent(show))
+    const currentShows = shows.filter((show) => show.isCurrent)
+    const pastShows = shows.filter((show) => !show.isCurrent)
 
     return <>
         <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
