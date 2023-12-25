@@ -41,6 +41,10 @@ export default async function Shows() {
                         width={800}
                         height={350}
                         image={Media.bannerImage(show.featuredImage?.[0]?.public_id, 800, 350)}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
                     /> : null}
 
                     <CardContent>
@@ -74,8 +78,12 @@ export default async function Shows() {
                     {show.featuredImage?.[0]?.url ? <CardMedia
                         component="img"
                         width={800}
-                        height={200}               
+                        height={200}
                         image={Media.bannerImage(show.featuredImage?.[0]?.public_id, 800, 200)}
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
                     /> : null}
                     <CardContent>
                         <Content content={show.showDetails} />

@@ -18,7 +18,10 @@ export default function PostCard(post) {
             </Grid>
             <Grid item xs={12} sm={8}>
                 {hasImage ? (
-                    <Image alt={post.title} src={Media.bannerImage(post.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350} />
+                    <Image alt={post.title} src={Media.bannerImage(post.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350}  style={{
+                        width: '100%',
+                        height: 'auto',
+                      }} />
                 ) : null}
                 <Content content={post.content} />
             </Grid>

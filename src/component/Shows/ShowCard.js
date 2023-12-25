@@ -27,6 +27,10 @@ export default function ShowCard(show) {
                 width={800}
                 height={350}
                 image={Media.bannerImage(show.featuredImage?.[0]?.public_id, 800, 350)}
+                style={{
+                    width: '100%',
+                    height: 'auto',
+                  }}
             /> : null}
 
             <CardContent>

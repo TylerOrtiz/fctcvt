@@ -116,7 +116,11 @@ export default async function Page({ params }) {
             <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
                 {show.featuredImage ? (
                     <Grid xs={4} sm={8} md={12}>
-                        <Image alt={show.title} src={Media.featureImage(show.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350} />
+                        <Image alt={show.title} src={Media.featureImage(show.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350}
+                            style={{
+                                width: '100%',
+                                height: 'auto',
+                            }} />
                     </Grid>
                 ) : null}
 

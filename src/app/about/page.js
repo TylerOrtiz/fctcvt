@@ -1,5 +1,6 @@
 import { getContentPages } from '@/api/content';
 import Content from '@/component/ContentBlock/Content'
+import Box from '@mui/material/Box'
 
 export default async function About() {
   const pages = await getContentPages()
@@ -7,9 +8,11 @@ export default async function About() {
 
   return (
     <>
-      <h1>{page.title}</h1>
+      <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
+        <h1>{page.title}</h1>
 
-      <Content content={page.content}></Content>
+        <Content content={page.content}></Content>
+      </Box>
     </>
   )
 }
