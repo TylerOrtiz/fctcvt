@@ -8,7 +8,11 @@ const getShows = async () => {
     const shows = items.map(entry => {
         return show(entry)
     })
-    return shows
+    const descendingShows = shows.sort((left, right) => {
+        return left?.startDate.getTime() > right?.startDate.getTime() ? -1 : 1
+    })
+
+    return descendingShows
 }
 
 const getPosts = async () => {
@@ -16,7 +20,11 @@ const getPosts = async () => {
     const posts = items.map(entry => {
         return post(entry)
     })
-    return posts
+    const descendingPosts = posts.sort((left, right) => {
+        return left?.date.getTime() > right?.date.getTime() ? -1 : 1
+    })
+
+    return descendingPosts
 }
 const getShowsCached = cache(getShows)
 const getPostsCached = cache(getPosts)

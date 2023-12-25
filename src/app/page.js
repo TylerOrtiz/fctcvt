@@ -1,27 +1,17 @@
 import { getPosts } from '@/api/content';
-import { longDate } from '@/utility/date';
-import Content from '@/component/ContentBlock/Content'
+import Box from '@mui/material/Box'
+import PostCard from '@/component/Posts/PostCard'
 
 export default async function Home() {
   const posts = await getPosts()
+  const recentPosts = posts.slice(0, 3)
 
   return (
-    <main>
-      <div>
-        <h1>Blog Posts</h1>
-        {posts.map((post, idx) => {
-        
-          return (
-            <div key={idx}>
-              <div>
-                <h2>{post.title}</h2>
-                <h3>{longDate(post.date)}</h3>
-              </div>
-              <Content content={post.content} />
-            </div>
-          )
-        })}
-      </div>
-    </main>
+    <>
+      <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
+        <h2>Recent Posts</h2>
+        {recentPosts.map((post) => (PostCard(post)))}
+      </Box>
+    </>
   )
 }
