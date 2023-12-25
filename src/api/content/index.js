@@ -2,6 +2,16 @@ import { cache } from 'react'
 import client from '@/api/clients/contentful'
 import show from './model/show'
 import post from './model/post'
+import page from './model/page'
+
+const getContentPages = async () => {
+    const { items } = await client.getEntries({ content_type: 'contentPage' })
+    const pages = items.map(entry => {
+        return page(entry)
+    })
+   
+    return pages
+}
 
 const getShows = async () => {
     const { items } = await client.getEntries({ content_type: 'show' })
@@ -28,5 +38,6 @@ const getPosts = async () => {
 }
 const getShowsCached = cache(getShows)
 const getPostsCached = cache(getPosts)
+const getContentPagesCached = cache(getContentPages)
 
-export { getShows, getShowsCached, getPosts, getPostsCached }
+export { getShows, getShowsCached, getPosts, getPostsCached, getContentPages, getContentPagesCached }
