@@ -17,7 +17,9 @@ const showLink = (show) => {
 const showTicketLink = (show) => {
     const baseUrl = `https://${process.env.SQUARESPACE_HOST_NAME}`
     const pathUrl = `${show.id}`
-    return `${baseUrl}/${pathUrl}`
+    // return `${baseUrl}/${pathUrl}`
+    // Temporary smoke and mirrors 
+    return 'https://fairfax-community-theatre-company.square.site/product/steelmagnolias/34'
 }
 
 const linkGenerators = { postsLink, postLink, showsLink, showLink, showTicketLink }
