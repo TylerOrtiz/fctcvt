@@ -12,6 +12,7 @@ import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
 import ShowDates from '@/component/Shows/ShowDates'
+import AddShow from '@/component/AddShowToCart/AddShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -81,7 +82,10 @@ export default async function Page({ params }) {
                 {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                     <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
                         Get Tickets
-                    </Button></Box>}
+                    </Button>
+                    <AddShow id={show.id} quantity={1}></AddShow>
+                  
+                    </Box>}
                 <Grid xs={4} sm={8} md={12}>
                     <ShowDetails />
                 </Grid>
