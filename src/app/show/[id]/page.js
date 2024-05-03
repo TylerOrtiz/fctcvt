@@ -7,13 +7,11 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
-import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
 import ShowDates from '@/component/Shows/ShowDates'
 import ActiveShowDates from '@/component/Shows/ActiveShowDates'
-import AddShow from '@/component/AddShowToCart/AddShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
