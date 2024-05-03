@@ -12,12 +12,15 @@ import { ListItemButton } from '@mui/material';
 import Button from '@mui/material/Button'
 import { updateCart, getCart } from '@/cart/cart';
 import { useQueryClient } from '@tanstack/react-query';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function ActiveShowDates({ showId }) {
     const [showTimes, setShowTimes] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)
     const [quantity, setQuantity] = useState(0)
     const maxQuantity = Math.min(10, showTimes[selectedIndex]?.quantity || 0)
+    const [addToCartMessage, setAddToCartMessage] = useState(false)
     const queryClient = useQueryClient()
 
     const addTicket = async (id) => {
@@ -28,6 +31,19 @@ export default function ActiveShowDates({ showId }) {
 
         updateCart(cart)
         queryClient.invalidateQueries({ queryKey: ['cart'] })
+        setQuantity(0)
+        setSelectedIndex(null)
+        setAddToCartMessage(true)
+    }
+
+    const changeQuantity = (quantity) => {
+        setQuantity(quantity)
+        setAddToCartMessage(false)
+    }
+
+    const changeSelectedShow = (index) => {
+        setSelectedIndex(index)
+        setAddToCartMessage(false)
     }
 
     useEffect(() => {
@@ -54,7 +70,7 @@ export default function ActiveShowDates({ showId }) {
                     key={idx}
                     selected={selectedIndex === idx}
                     disabled={showTime.quantity ? showTime.quantity === 0 : true}
-                    onClick={(event) => setSelectedIndex(idx)}>
+                    onClick={(event) => changeSelectedShow(idx)}>
                     <ListItem key={showTime.id}>
                         <ListItemText
                             primary={showTime.name}
@@ -65,7 +81,7 @@ export default function ActiveShowDates({ showId }) {
                 </ListItemButton>
             )}
         </List>
-        <div style={{ visibility: selectedIndex === null ? 'hidden' : 'visible' }}>
+        <div style={{ display: selectedIndex === null ? 'none' : 'inherit' }}>
             <FormControl fullWidth>
                 <InputLabel id="quantity-label">Quantity</InputLabel>
                 <Select
@@ -73,7 +89,7 @@ export default function ActiveShowDates({ showId }) {
                     label="Quantity"
                     labelId="quantity-label"
                     disabled={selectedIndex === null}
-                    onChange={(event) => setQuantity(event.target.value)}
+                    onChange={(event) => changeQuantity(event.target.value)}
                 >
                     {Array.from({ length: maxQuantity }).map((_, item) => {
                         return <MenuItem key={item} value={item}>{item}</MenuItem>
@@ -84,6 +100,6 @@ export default function ActiveShowDates({ showId }) {
                 </Button>
             </FormControl>
         </div>
-
+        {addToCartMessage ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">Added to cart!</Alert> : null}
     </>
 }
