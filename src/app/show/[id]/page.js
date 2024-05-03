@@ -12,6 +12,7 @@ import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
 import ShowDates from '@/component/Shows/ShowDates'
+import ActiveShowDates from '@/component/Shows/ActiveShowDates'
 import AddShow from '@/component/AddShowToCart/AddShow';
 
 export async function generateStaticParams() {
@@ -68,7 +69,7 @@ export default async function Page({ params }) {
 
             <h1>{show.title}</h1>
 
-            <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={4}>
                 {show.featuredImage ? (
                     <Grid xs={4} sm={8} md={12}>
                         <Image alt={show.title} src={Media.featureImage(show.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350}
@@ -79,19 +80,14 @@ export default async function Page({ params }) {
                     </Grid>
                 ) : null}
 
-                {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
-                        Get Tickets
-                    </Button>
-                    <AddShow id={show.id} quantity={1}></AddShow>
-                  
-                    </Box>}
-                <Grid xs={4} sm={8} md={12}>
+                <Grid xs={4} sm={8} md={12} >
                     <ShowDetails />
                 </Grid>
+              
                 <Grid xs={4} sm={4} md={6}>
-                    <ShowDates showId={productData?.id} />
+                    {show.isCurrent ? <ActiveShowDates showId={productData?.id} /> : <ShowDates showId={productData?.id} />}
                 </Grid>
+
                 <Grid xs={4} sm={4} md={6}>
                     <Location />
                 </Grid>

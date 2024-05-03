@@ -1,7 +1,6 @@
 import './globals.css'
-import Navigation from '@/component/Navigation'
-import ThemeRegistry from '@/component/ThemeRegistry/ThemeRegistry';
-import {Container} from '@mui/material';
+import { Providers } from './providers'
+
 
 export const metadata = {
   title: 'FCTC',
@@ -12,14 +11,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
-          <Navigation></Navigation>
-          <Container component="main" maxWidth="lg" sx={{
-            mt: ['87px', '107px']
-          }} disableGutters={true}>
-            {children}
-          </Container>
-        </ThemeRegistry>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
