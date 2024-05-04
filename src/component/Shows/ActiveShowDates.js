@@ -18,10 +18,12 @@ import CheckIcon from '@mui/icons-material/Check';
 export default function ActiveShowDates({ showId }) {
     const [showTimes, setShowTimes] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(null)
-    const [quantity, setQuantity] = useState(0)
-    const maxQuantity = Math.min(10, showTimes[selectedIndex]?.quantity || 0)
+    const [quantity, setQuantity] = useState(1)
     const [addToCartMessage, setAddToCartMessage] = useState(false)
     const queryClient = useQueryClient()
+
+    const maxQuantity = Math.min(10, showTimes[selectedIndex]?.quantity || 0)
+    const selectedAvailableToPurchase = (showTimes[selectedIndex]?.quantity || 0) >= 1
 
     const addTicket = async (id) => {
         const cart = getCart()
@@ -31,7 +33,7 @@ export default function ActiveShowDates({ showId }) {
 
         updateCart(cart)
         queryClient.invalidateQueries({ queryKey: ['cart'] })
-        setQuantity(0)
+        setQuantity(1)
         setSelectedIndex(null)
         setAddToCartMessage(true)
     }
@@ -43,6 +45,7 @@ export default function ActiveShowDates({ showId }) {
 
     const changeSelectedShow = (index) => {
         setSelectedIndex(index)
+        setQuantity(1)
         setAddToCartMessage(false)
     }
 
@@ -71,35 +74,40 @@ export default function ActiveShowDates({ showId }) {
                     selected={selectedIndex === idx}
                     disabled={showTime.quantity ? showTime.quantity === 0 : true}
                     onClick={(event) => changeSelectedShow(idx)}>
-                    <ListItem key={showTime.id}>
-                        <ListItemText
-                            primary={showTime.name}
-                            secondary={showTime.quantity ? `${showTime.quantity} remaining` : '0 remaining'}
-                        />
 
-                    </ListItem>
+                    <ListItemText
+                        primary={showTime.name}
+                        secondary={showTime.quantity ? `${showTime.quantity} remaining` : '0 remaining'}
+                    />
+
+
                 </ListItemButton>
             )}
         </List>
-        <div style={{ display: selectedIndex === null ? 'none' : 'inherit' }}>
-            <FormControl fullWidth>
-                <InputLabel id="quantity-label">Quantity</InputLabel>
-                <Select
-                    value={quantity}
-                    label="Quantity"
-                    labelId="quantity-label"
-                    disabled={selectedIndex === null}
-                    onChange={(event) => changeQuantity(event.target.value)}
-                >
-                    {Array.from({ length: maxQuantity }).map((_, item) => {
-                        return <MenuItem key={item} value={item}>{item}</MenuItem>
-                    })}
-                </Select>
-                <Button onClick={() => addTicket(showId)} disabled={selectedIndex === null || quantity === 0} size="large" variant="contained" color="secondary" aria-label="Add to Cart">
-                    Add to Cart
-                </Button>
-            </FormControl>
-        </div>
+        {selectedAvailableToPurchase ? <>
+            <div style={{ display: selectedIndex === null ? 'none' : 'inherit' }}>
+                <FormControl fullWidth>
+                    <InputLabel id="quantity-label">Quantity</InputLabel>
+                    <Select
+                        value={quantity}
+                        label="Quantity"
+                        labelId="quantity-label"
+                        disabled={selectedIndex === null}
+                        onChange={(event) => changeQuantity(event.target.value)}
+                    >
+                        {Array.from({ length: maxQuantity }).map((_, item) => {
+                            const value = item + 1
+                            return <MenuItem key={value} value={value}>{value}</MenuItem>
+                        })}
+                    </Select>
+                    <Button onClick={() => addTicket(showId)} disabled={selectedIndex === null || quantity === 0} size="large" variant="contained" color="secondary" aria-label="Add to Cart">
+                        Add to Cart
+                    </Button>
+                </FormControl>
+            </div>
+
+        </> : null}
+
         {addToCartMessage ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">Added to cart!</Alert> : null}
     </>
 }

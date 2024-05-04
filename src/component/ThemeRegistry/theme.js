@@ -31,6 +31,18 @@ const baseTheme = createTheme({
         }
       }
     },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: grey[400],
+          },
+          '&.Mui-selected:hover': {
+            backgroundColor: grey[300],
+          },
+        },
+      },
+    },
   }
 });
 
