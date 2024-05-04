@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -10,10 +10,12 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { ListItemButton } from '@mui/material';
 import Button from '@mui/material/Button'
-import { updateCart, getCart } from '@/cart/cart';
-import { useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+
+import { updateCart, getCart } from '@/cart/cart';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 export default function ActiveShowDates({ showId }) {
     const [showTimes, setShowTimes] = useState([])
@@ -21,9 +23,14 @@ export default function ActiveShowDates({ showId }) {
     const [quantity, setQuantity] = useState(1)
     const [addToCartMessage, setAddToCartMessage] = useState(false)
     const queryClient = useQueryClient()
+    const router = useRouter();
 
     const maxQuantity = Math.min(10, showTimes[selectedIndex]?.quantity || 0)
     const selectedAvailableToPurchase = (showTimes[selectedIndex]?.quantity || 0) >= 1
+
+    const goToCart = () => {
+        router.push(`/cart`);
+    }
 
     const addTicket = async (id) => {
         const cart = getCart()
@@ -36,6 +43,9 @@ export default function ActiveShowDates({ showId }) {
         setQuantity(1)
         setSelectedIndex(null)
         setAddToCartMessage(true)
+        setTimeout(() => {
+            goToCart()
+        }, 1000)
     }
 
     const changeQuantity = (quantity) => {
@@ -62,11 +72,13 @@ export default function ActiveShowDates({ showId }) {
 
     if (!showTimes) {
         return <>
+            <h2>Tickets:</h2>
+            <p>No ticket or show times are available. Please try again later.</p>
         </>
     }
 
     return <>
-        <h2>Show Times:</h2>
+        <h2>Tickets:</h2>
         <List>
             {showTimes.map((showTime, idx) =>
                 <ListItemButton
@@ -108,6 +120,11 @@ export default function ActiveShowDates({ showId }) {
 
         </> : null}
 
-        {addToCartMessage ? <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">Added to cart!</Alert> : null}
+        {addToCartMessage ? <>
+            <Alert severity="success"
+                icon={<CheckIcon fontSize="inherit"></CheckIcon>}
+            >Added to cart!</Alert>
+        </> : null
+        }
     </>
 }
