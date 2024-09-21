@@ -10,7 +10,13 @@ export async function GET(request, { params }) {
   })
   const inventory = await getInventory(variationIds)
   const variationData = Object.fromEntries(show.itemData.variations.map(x => [`${x.id}`, x]))
-  const inventoryData = Object.fromEntries(inventory.map(x => [`${x.catalogObjectId}`, x]))
+  let inventoryData = []
+  if (inventory) {
+    // TODO: Fix missing inventory handling better
+    inventoryData = Object.fromEntries(inventory.map(x => [`${x.catalogObjectId}`, x]))
+
+  }
+  
 
   const showtimes = Object.keys(variationData).map((variationKey) => {
     const data = variationData[variationKey]?.itemVariationData
@@ -19,7 +25,7 @@ export async function GET(request, { params }) {
       name: data.name,
       sku: data.sku,
       price: numberFormat.format(data?.priceMoney?.amount / 100n),
-      quantity: inventoryData[variationKey]?.quantity
+      quantity: inventoryData?.[variationKey]?.quantity ?? 0
     }
   })
 

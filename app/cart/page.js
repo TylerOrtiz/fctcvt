@@ -13,6 +13,20 @@ export default function Page({ params }) {
             getCart(),
     })
 
+    const checkout = async () => {
+        const response = await fetch('/api/checkout', {
+            method: 'POST',
+            body: JSON.stringify({ lineItems: cart?.items }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        console.log("checkout response", response)
+        const paylaod = await response.json()
+        window.location.href = paylaod.url
+    }
+
     const Cart = () => (
         <>
             <h2>Items:</h2>
@@ -25,7 +39,7 @@ export default function Page({ params }) {
     const CartTotal = () => (
         <>
             <h2>Total:</h2>
-            <Button>Checkout</Button>
+            <Button onClick={() => checkout()}>Checkout</Button>
         </>
     )
 
