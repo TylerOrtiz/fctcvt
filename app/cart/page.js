@@ -10,9 +10,19 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 export default function Page({ params }) {
     const { data: cart } = useQuery({
-        queryKey: ['cart'],
-        queryFn: () =>
-            getCart(),
+        queryKey: ['cart-display'],
+        queryFn: async () => {
+            const currentCart = getCart()
+            const products = await fetch('/api/shows').then((res) => res.json())
+
+            return {
+                items: currentCart.items.map((item) => {
+                    const product = products.find(p => p.dates.find((d) => d.id === item.show_time_id))
+                    const matchedDate = product.dates.find((d) => d.id === item.show_time_id)
+                    return `${product?.name} - ${matchedDate.name} - Quantity: ${item.quantity}`
+                })
+            }
+        }
     })
     const [errorMessage, setErrorMessage] = useState(null)
 

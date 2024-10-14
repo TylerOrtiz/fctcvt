@@ -32,12 +32,15 @@ export default function ActiveShowDates({ showId }) {
         router.push(`/cart`);
     }
 
-    const addTicket = async (id) => {
+    const addTicket = async () => {
         const cart = getCart()
-        for (let i = 0; i < quantity; i++) {
-            cart.items.push(id)
+        const exists = cart.items.findIndex((item) => item.show_id === showId && item.show_time_id === showTimes[selectedIndex].id)
+        if (exists >= 0) {
+            cart.items.splice(exists, 1)
         }
-
+        
+        cart.items.push({show_id: showId, show_time_id: showTimes[selectedIndex].id, quantity: quantity})
+        
         updateCart(cart)
         queryClient.invalidateQueries({ queryKey: ['cart'] })
         setQuantity(1)
@@ -112,7 +115,7 @@ export default function ActiveShowDates({ showId }) {
                             return <MenuItem key={value} value={value}>{value}</MenuItem>
                         })}
                     </Select>
-                    <Button onClick={() => addTicket(showId)} disabled={selectedIndex === null || quantity === 0} size="large" variant="contained" color="secondary" aria-label="Add to Cart">
+                    <Button onClick={() => addTicket()} disabled={selectedIndex === null || quantity === 0} size="large" variant="contained" color="secondary" aria-label="Add to Cart">
                         Add to Cart
                     </Button>
                 </FormControl>

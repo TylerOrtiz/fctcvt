@@ -21,7 +21,7 @@ export async function GET(request, { params }) {
   const showtimes = Object.keys(variationData).map((variationKey) => {
     const data = variationData[variationKey]?.itemVariationData
     return {
-      id: variationData[variationKey]?.id,
+      id: variationKey,
       name: data.name,
       sku: data.sku,
       price: numberFormat.format(data?.priceMoney?.amount / 100n),
