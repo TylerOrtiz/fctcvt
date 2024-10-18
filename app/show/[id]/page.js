@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { getShows } from '@/api/content';
-import { getProducts } from '@/api/catalog';
 import Link from 'next/link'
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -11,7 +10,7 @@ import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
-import ShowDates from '@/component/Shows/ShowDates'
+import LudusShow from '@/component/Shows/LudusShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -29,8 +28,6 @@ export default async function Page({ params }) {
         notFound()
     }
     
-    const products = await getProducts()
-    const productData = products.find(product => product.itemData?.name === show.title)
     const showTicketUrl = show.isCurrent
 
 
@@ -86,7 +83,7 @@ export default async function Page({ params }) {
                     <ShowDetails />
                 </Grid>
                 <Grid xs={4} sm={4} md={6}>
-                    <ShowDates showId={productData?.id} />
+                    {show.isCurrent ? <LudusShow showId={show.ludusShowId} /> : null}
                 </Grid>
                 <Grid xs={4} sm={4} md={6}>
                     <Location />
