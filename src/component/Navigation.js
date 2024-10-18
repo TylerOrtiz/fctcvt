@@ -15,6 +15,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Container from '@mui/material/Container';
 import LinkGenerator from '@/utility/links'
+import CartTrackerNav from '@/component/CartTracker/CartTrackerNav'
 
 export default function Navigation({ window }) {
     const drawerWidth = 240;
@@ -76,7 +77,7 @@ export default function Navigation({ window }) {
                         >
                             <Image src="/logo.webp" alt="fctc logo" width={75} height={75} />
                         </Button>
-                        <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
                             <Box sx={{ display: 'inline-flex', marginRight: '1rem' }}>
                                 <Link href="/">
                                     <Image src="/logo.webp" alt="fctc logo" width={100} height={100} style={{ display: 'inline-flex' }} />
@@ -88,6 +89,11 @@ export default function Navigation({ window }) {
                                         {item.label}
                                     </Button>
                                 ))}
+                            </Box>
+                        </Box>
+                        <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'end' }}>
+                            <Box sx={{ display: 'inline-block' }}>
+                                <CartTrackerNav />
                             </Box>
                         </Box>
                     </Toolbar>

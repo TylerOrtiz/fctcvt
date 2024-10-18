@@ -22,16 +22,13 @@ export default function ShowDates({ showId }) {
         return <>
         </>
     }
-    
+
     return <>
         <h2>Show Times:</h2>
         <List>
-            {showTimes.map(showTime =>
+            {showTimes.map((showTime) =>
                 <ListItem key={showTime.id}>
-                    <ListItemText
-                        primary={showTime.name}
-                        secondary={showTime.quantity ? `${showTime.quantity} remaining` : ''}
-                    />
+                    <ListItemText primary={showTime.name}/>
                 </ListItem>
             )}
         </List>

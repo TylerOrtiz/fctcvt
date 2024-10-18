@@ -3,7 +3,7 @@ import client from '@/api/clients/square'
 
 
 const getProducts = async () => {
-    const { result, ...httpResponse } = await client.catalogApi.listCatalog()
+    const { result, ...httpResponse } = await client.catalogApi.listCatalog(undefined, 'ITEM')
     return result.objects
 }
 
@@ -13,7 +13,7 @@ const getProduct = async (productId) => {
 }
 
 const getCategories = async () => {
-    const { result, ...httpResponse } = await client.catalogApi.listCatalog('CATEGORY')
+    const { result, ...httpResponse } = await client.catalogApi.listCatalog(undefined, 'CATEGORY')
     return result.objects
 }
 

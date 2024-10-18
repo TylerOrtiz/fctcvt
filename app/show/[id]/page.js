@@ -7,11 +7,10 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
-import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
-import ShowDates from '@/component/Shows/ShowDates'
+import LudusShow from '@/component/Shows/LudusShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -67,7 +66,7 @@ export default async function Page({ params }) {
 
             <h1>{show.title}</h1>
 
-            <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid container columns={{ xs: 4, sm: 8, md: 12 }} spacing={4}>
                 {show.featuredImage ? (
                     <Grid xs={4} sm={8} md={12}>
                         <Image alt={show.title} src={Media.featureImage(show.featuredImage?.[0]?.public_id, 800, 350)} width={800} height={350}
@@ -78,16 +77,14 @@ export default async function Page({ params }) {
                     </Grid>
                 ) : null}
 
-                {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
-                        Get Tickets
-                    </Button></Box>}
-                <Grid xs={4} sm={8} md={12}>
+                <Grid xs={4} sm={8} md={12} >
                     <ShowDetails />
                 </Grid>
+              
                 <Grid xs={4} sm={4} md={6}>
-                    <ShowDates showId={productData?.id} />
+                    {show.isCurrent ? <LudusShow showId={show.ludusShowId} /> : null}
                 </Grid>
+
                 <Grid xs={4} sm={4} md={6}>
                     <Location />
                 </Grid>
