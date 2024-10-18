@@ -74,19 +74,15 @@ export default async function Page({ params }) {
                             }} />
                     </Grid>
                 ) : null}
-
-                {showTicketUrl && <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets">
-                        Get Tickets
-                    </Button></Box>}
-                <Grid xs={4} sm={8} md={12}>
+                <Grid xs={4} sm={8} md={6}>
                     <ShowDetails />
                 </Grid>
-                <Grid xs={4} sm={4} md={6}>
-                    {show.isCurrent ? <LudusShow showId={show.ludusShowId} /> : null}
-                </Grid>
+             
                 <Grid xs={4} sm={4} md={6}>
                     <Location />
+                </Grid>
+                <Grid xs={12} sm={12} md={12}>
+                    {showTicketUrl ? <LudusShow showId={show.ludusShowId} /> : null}
                 </Grid>
             </Grid>
         </Box>

@@ -30,7 +30,7 @@ export default function LudusShow({ showId }) {
                 id='ludusWidget'
                 src={iframeUrl}
                 sandbox='allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-modals allow-forms allow-top-navigation allow-popups'
-                style={{width: '100%', height: '500px', border: 0, overflow: 'hidden'}}
+                style={{width: '100%', height: '700px', border: 0, overflow: 'hidden'}}
             />
         )}
     </>
