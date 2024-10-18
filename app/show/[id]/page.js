@@ -10,8 +10,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
-import ShowDates from '@/component/Shows/ShowDates'
-import ActiveShowDates from '@/component/Shows/ActiveShowDates'
+import LudusShow from '@/component/Shows/LudusShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -83,7 +82,7 @@ export default async function Page({ params }) {
                 </Grid>
               
                 <Grid xs={4} sm={4} md={6}>
-                    {show.isCurrent ? <ActiveShowDates showId={productData?.id} /> : <ShowDates showId={productData?.id} />}
+                    {show.isCurrent ? <LudusShow showId={show.ludusShowId} /> : null}
                 </Grid>
 
                 <Grid xs={4} sm={4} md={6}>

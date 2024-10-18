@@ -19,6 +19,7 @@ const show = (parent) => {
         showDetails: fields.showDetails,
         startDate: fields.startDate ? new Date(fields.startDate) : undefined,
         endDate: fields.endDate ? new Date(fields.endDate) : undefined,
+        ludusShowId: fields.ludusShowId,
     }
 }
 
