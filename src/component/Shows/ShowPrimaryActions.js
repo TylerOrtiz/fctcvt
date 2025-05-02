@@ -10,7 +10,7 @@ export default function ShowPrimaryActions({ show, showTickets }) {
                 Show Details
             </Button>
             {showTicketUrl && <Button href={LinkGenerator.showTicketLink(show)} size="large" variant="contained" color="secondary" aria-label="Get Tickets" style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
-                Get Tickets
+                Tickets
             </Button>}
         </div>
     )
