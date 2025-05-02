@@ -10,7 +10,6 @@ import Button from '@mui/material/Button'
 import Content from '@/component/ContentBlock/Content'
 import LinkGenerator from '@/utility/links'
 import Media from '@/utility/media'
-import LudusShow from '@/component/Shows/LudusShow';
 
 export async function generateStaticParams() {
     const shows = await getShows()
@@ -80,9 +79,6 @@ export default async function Page({ params }) {
              
                 <Grid xs={4} sm={4} md={6}>
                     <Location />
-                </Grid>
-                <Grid xs={12} sm={12} md={12}>
-                    {showTicketUrl ? <LudusShow showId={show.ludusShowId} /> : null}
                 </Grid>
             </Grid>
         </Box>

@@ -15,7 +15,7 @@ const showLink = (show) => {
 }
 
 const showTicketLink = (show) => {
-    return `/show/${show.id}`
+    return `https://fctc.ludus.com/${show.ludusShowId}`
 }
 
 const linkGenerators = { postsLink, postLink, showsLink, showLink, showTicketLink }
