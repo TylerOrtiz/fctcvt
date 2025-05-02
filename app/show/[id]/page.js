@@ -26,7 +26,7 @@ export default async function Page({ params }) {
     if (!show) {
         notFound()
     }
-    
+
     const showTicketUrl = show.isCurrent
 
 
@@ -73,11 +73,30 @@ export default async function Page({ params }) {
                             }} />
                     </Grid>
                 ) : null}
-                <Grid xs={4} sm={8} md={6}>
+                {showTicketUrl &&
+                    <Grid xs={12} sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                    <Button 
+                        href={LinkGenerator.showTicketLink(show)} 
+                        size="large" 
+                        variant="contained" 
+                        color="secondary" 
+                        aria-label="Get Tickets"
+                        sx={{ 
+                            width: { xs: '90%', sm: '50%', md: '30%' },
+                            py: 1.5,
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Tickets
+                    </Button>
+                </Grid>
+                }
+                <Grid xs={4} sm={8} md={6} sx={{ px: 2 }}>
                     <ShowDetails />
                 </Grid>
-             
-                <Grid xs={4} sm={4} md={6}>
+
+                <Grid xs={4} sm={4} md={6} sx={{ px: 2 }}>
                     <Location />
                 </Grid>
             </Grid>
